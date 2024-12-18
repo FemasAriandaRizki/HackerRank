@@ -1,26 +1,26 @@
-"use strict";
+// "use strict";
 
-const fs = require("fs");
+// const fs = require("fs");
 
-process.stdin.resume();
-process.stdin.setEncoding("utf-8");
+// process.stdin.resume();
+// process.stdin.setEncoding("utf-8");
 
-let inputString = "";
-let currentLine = 0;
+// let inputString = "";
+// let currentLine = 0;
 
-process.stdin.on("data", function (inputStdin) {
-    inputString += inputStdin;
-});
+// process.stdin.on("data", function (inputStdin) {
+//     inputString += inputStdin;
+// });
 
-process.stdin.on("end", function () {
-    inputString = inputString.split("\n");
+// process.stdin.on("end", function () {
+//     inputString = inputString.split("\n");
 
-    main();
-});
+//     main();
+// });
 
-function readLine() {
-    return inputString[currentLine++];
-}
+// function readLine() {
+//     return inputString[currentLine++];
+// }
 
 /*
  * Complete the 'sockMerchant' function below.
@@ -51,18 +51,28 @@ function sockMerchant(n, ar) {
 }
 
 function main() {
-    const ws = fs.createWriteStream(process.env.OUTPUT_PATH);
+    const readline = require("readline");
 
-    const n = parseInt(readLine().trim(), 10);
+    const rl = readline.createInterface({
+        input: process.stdin,
+        output: process.stdout,
+    });
 
-    const ar = readLine()
-        .replace(/\s+$/g, "")
-        .split(" ")
-        .map((arTemp) => parseInt(arTemp, 10));
+    rl.question("Masukkan jumlah kaos kaki (n): ", (nInput) => {
+        const n = parseInt(nInput.trim(), 10);
 
-    const result = sockMerchant(n, ar);
+        rl.question("Masukkan warna kaos kaki (array ar): ", (arInput) => {
+            const ar = arInput
+                .trim()
+                .split(" ")
+                .map((arTemp) => parseInt(arTemp, 10));
 
-    ws.write(result + "\n");
+            const result = sockMerchant(n, ar);
 
-    ws.end();
+            console.log(`Jumlah pasangan kaos kaki: ${result}`);
+            rl.close();
+        });
+    });
 }
+
+main();
